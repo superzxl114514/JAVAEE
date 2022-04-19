@@ -34,9 +34,9 @@ public class DataBaseOperator {
 			instance = new DataBaseOperator();
 		return instance;
 	}
-	public void insert(Userdata ud)
+	public void insert(Userdata ud) throws SQLException
 	{
-		try {
+
 			String username=ud.Get_Username();
 			String password=ud.Get_Password();
 			String sql = "insert into userdata(username,password)"
@@ -47,11 +47,7 @@ public class DataBaseOperator {
 			stat.executeUpdate(sql); 
 			if(stat!=null){
 		    	   stat.close();
-		    }			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			}
 	}
 	public Userdata search(String un, String pw) throws SQLException
 	{

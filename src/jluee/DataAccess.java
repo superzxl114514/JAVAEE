@@ -82,18 +82,15 @@ public class DataAccess extends HttpServlet {
 		case 3:
 			Welcome(request,response);
 		}
-		}catch (IOException e) {
+		}catch (IOException |SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			HttpSession session = request.getSession();
+    		session.setAttribute("sharingvar_error", e);
+    		response.sendRedirect("error.jsp");
 		} 	
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
 		
 	}
-	public void Register(HttpServletRequest request, HttpServletResponse response) {
-		try {		
+	public void Register(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException{	
 
 			String username=request.getParameter("username");
 	        String password=request.getParameter("password");
@@ -102,13 +99,9 @@ public class DataAccess extends HttpServlet {
 	        ud.Set_Password(password);
 	        ud.Set_Username(username);
 	        DataBaseOperator.getInstance().insert(ud);
-	        
 			response.sendRedirect("/ServletPractice/DataAccess?op=0");
 		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+			
     }
 	public void Report(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Output.outputToClient("register done",response);
